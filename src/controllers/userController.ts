@@ -11,7 +11,7 @@ import { getDb } from "../utils/db";
 
 export const loadUsersHandler = async (req: Request, res: Response) => {
   try {
-    await loadUsers();
+    await loadUsers(); // Load data from JSONPlaceholder (if not already in MongoDB)
     const db = getDb();
 
     // Fetch users, posts, and comments from MongoDB
@@ -27,12 +27,13 @@ export const loadUsersHandler = async (req: Request, res: Response) => {
     });
   } catch (error) {
     if (error instanceof Error) {
-      res.status(500).send(error.message);
+      res.status(500).json({ message: error.message });
     } else {
-      res.status(500).send("An unknown error occurred");
+      res.status(500).json({ message: "An unknown error occurred" });
     }
   }
 };
+
 export const deleteAllUsersHandler = async (req: Request, res: Response) => {
   try {
     await deleteAllUsers();

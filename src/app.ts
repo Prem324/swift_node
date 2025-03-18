@@ -1,4 +1,3 @@
-// src/app.ts
 import express from "express";
 import { connectToDatabase } from "./utils/db";
 import {
@@ -13,7 +12,7 @@ const app = express();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Hello, Vercel!");
+  res.send("Hello, I am fine!");
 });
 app.get("/load", loadUsersHandler);
 app.delete("/users", deleteAllUsersHandler);
@@ -21,12 +20,10 @@ app.delete("/users/:userId", deleteUserByIdHandler);
 app.get("/users/:userId", getUserByIdHandler);
 app.put("/users", createUserHandler);
 
-// Start the server immediately
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
 
-// Connect to MongoDB in the background
 connectToDatabase()
   .then(() => {
     console.log("Connected to MongoDB");

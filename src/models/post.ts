@@ -1,4 +1,3 @@
-// src/models/post.ts
 export interface Post {
   id: number;
   userId: number;

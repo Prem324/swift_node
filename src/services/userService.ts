@@ -1,34 +1,28 @@
 import { getDb } from "../utils/db";
 import { User } from "../models/user";
 
-// Load users, posts, and comments from JSONPlaceholder and insert into MongoDB (if not already present)
 export const loadUsers = async () => {
   const db = getDb();
   const usersCollection = db.collection("users");
   const postsCollection = db.collection("posts");
   const commentsCollection = db.collection("comments");
 
-  // Fetch users from JSONPlaceholder
   const usersResponse = await fetch(
     "https://jsonplaceholder.typicode.com/users"
   );
   const users: User[] = await usersResponse.json();
 
   for (const user of users) {
-    // Check if the user already exists in MongoDB
     const existingUser = await usersCollection.findOne({ id: user.id });
     if (!existingUser) {
-      // Insert the user into MongoDB
       await usersCollection.insertOne(user);
 
-      // Fetch and insert posts for the user
       const postsResponse = await fetch(
         `https://jsonplaceholder.typicode.com/posts?userId=${user.id}`
       );
       const posts = await postsResponse.json();
       await postsCollection.insertMany(posts);
 
-      // Fetch and insert comments for each post
       for (const post of posts) {
         const commentsResponse = await fetch(
           `https://jsonplaceholder.typicode.com/comments?postId=${post.id}`

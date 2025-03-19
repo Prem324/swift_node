@@ -1,4 +1,3 @@
-// src/controllers/userController.ts
 import { Request, Response } from "express";
 import {
   loadUsers,
@@ -11,10 +10,9 @@ import { getDb } from "../utils/db";
 
 export const loadUsersHandler = async (req: Request, res: Response) => {
   try {
-    await loadUsers(); // Load data from JSONPlaceholder (if not already in MongoDB)
+    await loadUsers();
     const db = getDb();
 
-    // Fetch users, posts, and comments from MongoDB
     const users = await db.collection("users").find().toArray();
     const posts = await db.collection("posts").find().toArray();
     const comments = await db.collection("comments").find().toArray();
@@ -52,16 +50,15 @@ export const deleteUserByIdHandler = async (
   res: Response
 ): Promise<void> => {
   try {
-    const userId = parseInt(req.params.userId, 10); // Convert userId to number
+    const userId = parseInt(req.params.userId, 10);
     const db = getDb();
     const usersCollection = db.collection("users");
 
-    // Delete the user
     const result = await usersCollection.deleteOne({ id: userId });
 
     if (result.deletedCount === 0) {
       res.status(404).json({ message: "User not found" });
-      return; // Ensure the function exits here
+      return;
     }
 
     res.status(200).json({ message: "User deleted successfully" });

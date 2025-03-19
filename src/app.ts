@@ -21,22 +21,10 @@ app.get("/users/:userId", getUserByIdHandler);
 app.put("/users", createUserHandler);
 
 const startServer = async () => {
-  await connectToDatabase(); // Ensure this is called
+  await connectToDatabase();
   app.listen(3000, () => {
     console.log("Server is running on port 3000");
   });
 };
 
 startServer();
-
-// app.listen(3000, () => {
-//   console.log("Server is running on port 3000");
-// });
-
-// connectToDatabase()
-//   .then(() => {
-//     console.log("Connected to MongoDB");
-//   })
-//   .catch((error) => {
-//     console.error("Error connecting to MongoDB:", error);
-//   });

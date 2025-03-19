@@ -1,5 +1,5 @@
 import express from "express"; // Import the Express framework
-import cors from "cors"; // Import the cors package
+import cors from "cors";
 import { connectToDatabase } from "./utils/db"; // Import the function to connect to the database
 import {
   loadUsersHandler,

@@ -1,4 +1,5 @@
 import express from "express"; // Import the Express framework
+import cors from "cors"; // Import the cors package
 import { connectToDatabase } from "./utils/db"; // Import the function to connect to the database
 import {
   loadUsersHandler,
@@ -10,6 +11,14 @@ import {
 
 // Create an Express application
 const app = express();
+
+// Enable CORS for all routes
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Allow requests from this origin
+    credentials: true, // Allow cookies and credentials
+  })
+);
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());
